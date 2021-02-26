@@ -1,0 +1,32 @@
+﻿<Window x:Class="FrontPart.BookWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:FrontPart"
+        mc:Ignorable="d"
+        Title="BookWindow" Height="450" Width="800">
+    <Grid>
+        <Label Content="Name" HorizontalAlignment="Left" Margin="191,10,0,0" VerticalAlignment="Top"/>
+        <Label Content="Surname" HorizontalAlignment="Left" Margin="191,41,0,0" VerticalAlignment="Top"/>
+        <Label Content="Passport ID" HorizontalAlignment="Left" Margin="191,72,0,0" VerticalAlignment="Top"/>
+        <Label Content="Email" HorizontalAlignment="Left" Margin="191,103,0,0" VerticalAlignment="Top"/>
+        <Label Content="Country" HorizontalAlignment="Left" Margin="191,134,0,0" VerticalAlignment="Top"/>
+        <Label Content="City" HorizontalAlignment="Left" Margin="191,165,0,0" VerticalAlignment="Top"/>
+        <Label Content="Credit Card Number" HorizontalAlignment="Left" Margin="191,196,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="name" HorizontalAlignment="Left" Height="23" Margin="348,10,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="surname" HorizontalAlignment="Left" Height="23" Margin="348,38,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="pID" HorizontalAlignment="Left" Height="23" Margin="348,72,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="email" HorizontalAlignment="Left" Height="23" Margin="348,106,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="country" HorizontalAlignment="Left" Height="23" Margin="348,137,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="city" HorizontalAlignment="Left" Height="23" Margin="348,166,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="card" HorizontalAlignment="Left" Height="23" Margin="348,196,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <Label Content="Gender" HorizontalAlignment="Left" Margin="191,227,0,0" VerticalAlignment="Top"/>
+        <ComboBox x:Name="genderComboBox" HorizontalAlignment="Left" Margin="348,227,0,0" VerticalAlignment="Top" Width="120"/>
+        <DatePicker x:Name="toDate" HorizontalAlignment="Left" Margin="348,275,0,0" VerticalAlignment="Top"/>
+        <Label Content="To Date" HorizontalAlignment="Left" Margin="195,275,0,0" VerticalAlignment="Top"/>
+        <Button Content="Book" HorizontalAlignment="Left" Margin="348,377,0,0" VerticalAlignment="Top" Width="75" Click="Book_Click"/>
+        <Button Content="Back to menu" HorizontalAlignment="Left" Margin="688,377,0,0" VerticalAlignment="Top" Width="75" Click="menu_Click"/>
+
+    </Grid>
+</Window>

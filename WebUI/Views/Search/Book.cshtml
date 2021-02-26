@@ -1,0 +1,71 @@
+﻿@model WebUI.Models.Book 
+
+
+    <div class="container">
+        <div id="Div1">
+
+
+            <form asp-action="BookPost" asp-controller="Search" method="post">
+                <input asp-for="@Model.hotelName" type="hidden" />
+                <input asp-for="@Model.cityName" type="hidden" />
+                <input asp-for="@Model.BedQuantity" type="hidden" />
+                <input asp-for="@Model.FROM" type="hidden">
+                <input asp-for="@Model.Money" type="hidden">
+
+                <div class="form-group">
+                    <div class="col">
+                        <label for="validationCustom01">First name</label>
+                        <input asp-for="@Model.personName" type="text" class="form-control" placeholder="First name">
+                    </div>
+                    <br>
+                    <div class="col">
+                        <label for="validationCustom01">Last name</label>
+                        <input asp-for="@Model.personSurname" type="text" class="form-control" placeholder="Last name">
+                    </div>
+                    <br>
+                    <div class="col">
+                        <label for="validationCustom01">Passport Id</label>
+                        <input asp-for="@Model.passportID" type="text" class="form-control" placeholder="Passport Id">
+                    </div>
+                </div>
+
+
+                <div class="col">
+                    <label for="exampleInputEmail1">Email address</label>
+                    <input asp-for="@Model.personEmail" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+                    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                </div>
+
+                <div class="col">
+                    <label>City</label>
+                    <input asp-for="@Model.personCity" type="text" class="form-control" placeholder="Yerevan">
+                </div>
+                <div class="col">
+                    <label>Country</label>
+                    <input asp-for="@Model.personCountry" type="text" class="form-control" placeholder="Yerevan">
+                </div>
+                <div class="col">
+                    <label for="formGroupExampleInput2">Credit Card Number</label>
+                    <input asp-for="@Model.personCreditCardNumber" type="text" class="form-control" id="formGroupExampleInput2" placeholder="XXXX XXXX XXXX XXXX">
+                </div>
+                <label> To :   </label>     <input asp-for="@Model.to" type="date"><br><br>
+
+                <label class="my-1 mr-2">Gender</label>
+                <select asp-for="@Model.personGender" class="custom-select my-1 mr-sm-2">
+                    <option>M</option>
+                    <option>F</option>
+                </select>
+
+
+                <input type="submit" class="btn btn-primary" style="margin-left: 286px">
+                
+
+
+
+            </form>
+
+
+
+
+        </div>
+    </div>

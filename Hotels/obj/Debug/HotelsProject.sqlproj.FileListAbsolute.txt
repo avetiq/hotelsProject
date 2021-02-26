@@ -1,0 +1,10 @@
+D:\Bitbucket\HotelProject\Hotels\bin\Debug\HotelsProject.dacpac
+D:\Bitbucket\HotelProject\Hotels\bin\Debug\Hotels.dll
+D:\Bitbucket\HotelProject\Hotels\bin\Debug\Hotels.pdb
+D:\Bitbucket\HotelProject\Hotels\obj\Debug\Hotels.dll
+D:\Bitbucket\HotelProject\Hotels\obj\Debug\Hotels.pdb
+D:\Bitbucket\HotelProject\Hotels\obj\Debug\Model.xml
+D:\Bitbucket\HotelProject\Hotels\obj\Debug\refactor.xml
+D:\Bitbucket\HotelProject\Hotels\obj\Debug\postdeploy.sql
+D:\Bitbucket\HotelProject\Hotels\obj\Debug\predeploy.sql
+D:\Bitbucket\HotelProject\Hotels\obj\Debug\HotelsProject.sqlprojAssemblyReference.cache

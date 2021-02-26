@@ -1,0 +1,18 @@
+﻿<Window x:Class="FrontPart.Pictures"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:FrontPart"
+        mc:Ignorable="d"
+        Title="Pictures" Height="450" Width="800" FontSize="14">
+    <Grid>
+        <DataGrid x:Name="Hotelgrid" HorizontalAlignment="Left" Height="240" Margin="32,87,0,0" VerticalAlignment="Top" Width="200"/>
+        <Label Content="In this window you can insert hotels pictures but only the first picture of the hotel is better to insert at first" HorizontalAlignment="Left" Margin="83,31,0,0" VerticalAlignment="Top"/>
+        <Label Content="Here enter the URL of picture" HorizontalAlignment="Left" Margin="419,158,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="pictureURL" HorizontalAlignment="Left" Height="23" Margin="334,208,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="400"/>
+        <Button Content="Submit" HorizontalAlignment="Left" Margin="398,345,0,0" VerticalAlignment="Top" Width="75" Click="INsert_Click"/>
+        <Button Content="Back to Menu" HorizontalAlignment="Left" Margin="681,386,0,0" VerticalAlignment="Top" Width="95" Click="menu_Click" />
+
+    </Grid>
+</Window>

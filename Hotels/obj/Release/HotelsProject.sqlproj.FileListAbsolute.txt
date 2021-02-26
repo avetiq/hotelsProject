@@ -1,0 +1,5 @@
+D:\Bitbucket\HotelProject\Hotels\bin\Release\HotelsProject.dacpac
+D:\Bitbucket\HotelProject\Hotels\bin\Release\Hotels.dll
+D:\Bitbucket\HotelProject\Hotels\bin\Release\Hotels.pdb
+D:\Bitbucket\HotelProject\Hotels\obj\Release\Hotels.dll
+D:\Bitbucket\HotelProject\Hotels\obj\Release\Hotels.pdb

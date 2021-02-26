@@ -1,0 +1,174 @@
+﻿@model WebUI.Models.Room
+
+
+    <script type="text/javascript">
+        var myPicturesList = new Array();
+        @foreach(var photo in @Model.Photos)
+        {
+            @:myPicturesList.push("@photo");
+        }
+        var totalimagesCount = myPicturesList.length;
+        var currImangeIndex = 0;
+
+        function terti(x) {
+            var image = document.getElementById('img');
+            currImangeIndex += x;
+
+            if (currImangeIndex == totalimagesCount) {
+                currImangeIndex = 0;
+            }
+            if (currImangeIndex == -1) {
+                currImangeIndex = totalimagesCount - 1;
+            }
+            
+            image.src = myPicturesList[currImangeIndex];
+            console.log(image.src);
+        }
+
+    </script>
+
+<div class="container">
+    <div id="Div1">
+
+
+        <h2 id="NameHotel">@Model.hotelName</h2>
+        <h3>@Model.cityName</h3>
+        <div id="slider">
+            <img src="@Model.picturesHotelsRoom[0]" id="img" />
+            <div id="left_holder">
+                <img onClick="terti(-1)" class="left" src="~/photos/arrow_right.png" />
+
+            </div>
+            <div id="right_holder">
+                <img onClick="terti(1)" class="right" src="~/photos/arrow_left.png" />
+            </div>
+        </div>
+
+
+        <div id="description">
+            <p style="font-size:17px;">
+                @Model.descriptionHotelRoom
+            </p>
+        </div>
+        <br>
+        <br>
+        <br>
+
+        <div id="rooms">
+            @foreach (var item in Model.freeRooms)
+            {
+            <div class="prices" style="margin-bottom: 20px;">
+                <p>@item.bed  senyakanoc    @item.money</p>
+                
+                <a style="float:right;" href='@Url.Action("Book", "Search", new {hotelName = @Model.hotelName, cityName = @Model.cityName, BedQuantity = @item.bed, Money = @item.money, FROM = @Model.dateFrom, to = @Model.dateTo })' class="btn btn-primary" role="button">Book</a>
+            </div>
+            }
+        </div>
+
+
+
+        <div id="facilities">
+            <h3>Most popular facilities</h3>
+            <br>
+            <div class="row">
+                <div class="col-sm-2 services">
+                    <img src="~/photos/icons/swimming.png">
+                </div>
+                <div class="col-sm-3">
+                    <h5>Swimming pool</h5>
+                </div>
+                <div class="col-sm-2 services">
+                    <img src="~/photos/icons/breakfast.jpg">
+                </div>
+                <div class="col-sm-3">
+                    <h5>Breakfast</h5>
+                </div>
+                <div class="col-sm-2 services">
+                    <img src="~/photos/icons/bar.jpg">
+                </div>
+                <div class="col-sm-3">
+                    <h5>Bar</h5>
+                </div>
+            </div>
+
+            <br>
+
+            <div class="row">
+                <div class="col-sm-2 services">
+                    <img src="~/photos/icons/restaurant.png">
+                </div>
+                <div class="col-sm-3">
+                    <h5>Restaurant</h5>
+                </div>
+                <div class="col-sm-2 services">
+                    <img src="~/photos/icons/roomService.jpg">
+                </div>
+                <div class="col-sm-3">
+                    <h5>Room Service</h5>
+                </div>
+                <div class="col-sm-2 services">
+                    <img src="~/photos/icons/parking.jpg">
+                </div>
+                <div class="col-sm-3">
+                    <h5>Parking</h5>
+                </div>
+            </div>
+
+
+            <br>
+
+            <div class="row">
+                <div class="col-sm-2 services">
+                    <img src="~/photos/icons/no-smoking.png">
+                </div>
+                <div class="col-sm-3">
+                    <h5>No Smoking</h5>
+                </div>
+                <div class="col-sm-2 services">
+                    <img src="~/photos/icons/wi-fi.jpg">
+                </div>
+                <div class="col-sm-3">
+                    <h5>Wi-fi</h5>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+    </div>
+
+
+</div>
+<footer>
+
+
+    <div id="footer">
+        <div class="row">
+            <div class="col-sm-4 center">
+                <img src="~/photos/icons/phones.png">
+            </div>
+            <div class="col-sm-4">
+                <img src="~/photos/icons/location.png">
+            </div>
+            <div class="col-sm-4">
+                <img src="~/photos/icons/mail.png">
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-sm-4">
+                <h4>+374 55 88 77 99</h4>
+            </div>
+            <div class="col-sm-4">
+                <h4>120 South Los Angeles Street,</h4>
+            </div>
+            <div class="col-sm-4">
+                <h4>avetiq.hotel@gmail.com</h4>
+            </div>
+        </div>
+    </div>
+
+</footer>

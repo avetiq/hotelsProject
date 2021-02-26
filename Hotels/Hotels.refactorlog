@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Operations Version="1.0" xmlns="http://schemas.microsoft.com/sqlserver/dac/Serialization/2012/02">
+  <Operation Name="Rename Refactor" Key="24e16052-4657-4ae9-8e14-1a85824884e6" ChangeDateTime="02/28/2020 09:45:39">
+    <Property Name="ElementName" Value="[dbo].[Hotels].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Hotels]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="ID" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="a16ba480-e399-46c3-857c-6516ff06ee3c" ChangeDateTime="03/03/2020 09:09:06">
+    <Property Name="ElementName" Value="[dbo].[booked].[from]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[booked]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="From" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="d50172b5-5d64-47fc-9142-f4e7755416d4" ChangeDateTime="03/03/2020 09:09:09">
+    <Property Name="ElementName" Value="[dbo].[booked].[to]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[booked]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="To" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="22cacbf6-d9d5-46af-a1c9-a38e49b299cb" ChangeDateTime="03/03/2020 09:09:14">
+    <Property Name="ElementName" Value="[dbo].[booked].[Pa]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[booked]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="1" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="b5821e3e-ba19-4100-a496-6270567dfb42" ChangeDateTime="03/03/2020 09:09:18">
+    <Property Name="ElementName" Value="[dbo].[booked].[hotelid]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[booked]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Hotelid" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="360a4cec-52b7-4bb1-8f84-4b7a3e683576" ChangeDateTime="03/03/2020 09:09:29">
+    <Property Name="ElementName" Value="[dbo].[booked].[1]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[booked]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Passportid" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="4826f0da-fd05-44c1-ae61-9a977030b3aa" ChangeDateTime="03/03/2020 09:10:42">
+    <Property Name="ElementName" Value="[dbo].[booked].[Country]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[booked]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="City" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="f847042f-4d9f-4a17-8e6f-c0aef1a86274" ChangeDateTime="03/25/2020 12:25:16">
+    <Property Name="ElementName" Value="[dbo].[HotelsRoomsInfo].[Hid]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[HotelsRoomsInfo]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="ID" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="3317d152-24a2-4262-8dc5-6d1df7e56d70" ChangeDateTime="03/26/2020 13:31:14">
+    <Property Name="ElementName" Value="[dbo].[booked].[Hotelid]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[booked]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="HotelidRoom" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="142c3e88-12d0-4084-a0e5-fcf232dface5" ChangeDateTime="04/20/2020 07:38:48">
+    <Property Name="ElementName" Value="[dbo].[booked].[RoomNuber]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[booked]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="RoomNumber" />
+  </Operation>
+</Operations>

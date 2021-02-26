@@ -1,0 +1,39 @@
+﻿@model WebUI.Models.ForLoadingInfo
+
+    <div class="container-fluid" style="position: absolute; left: 40%;">
+        <div id="formDiv" class="form-horizontal">
+            <form asp-action="Index" asp-controller="Search" method="post" id="initialForm">
+                <label>Choose a Hotel:</label>
+                <select asp-for="@Model.SearchHotelName" class="form-control" id="selectHotel">
+                    <option value="">Select</option>
+                    @foreach (var hotel in @Model.Hotels)
+                    {
+                        <option value="@hotel">@hotel</option>
+                    }
+
+
+                </select><br><br>
+                <label>Choose a City:  </label>
+                <select asp-for="@Model.SearchCity" id="selectCity">
+                    <option value="">Select</option>
+                    @foreach (var city in @Model.Cities)
+                    {
+                        <option value="@city">@city</option>
+                    }
+                </select>
+                <br><br>
+                <label>Select your dates</label><br>
+                <label>From :</label>    <input asp-for="@Model.SearchFromDate" type="date"><br><br>
+                <label> To :   </label>     <input asp-for="@Model.SearchToDate" type="date"><br><br>
+                <label>Select Bed Quantity  </label><br>
+                <select asp-for="@Model.BedQuantity" id="BedComboBox">
+                    <option>0</option>
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                </select>
+                <input type="submit" value="Search" id="SubmitButton">
+            </form>
+        </div>
+    </div>

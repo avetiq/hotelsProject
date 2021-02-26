@@ -1,0 +1,7 @@
+﻿CREATE TABLE [dbo].[Hotels]
+(
+	[ID] INT NOT NULL IDENTITY(1,1), 
+    [Name] VARCHAR(50) NOT NULL, 
+    [City] VARCHAR(50) NOT NULL, 
+	CONSTRAINT hotelsPK PRIMARY KEY([ID])
+)

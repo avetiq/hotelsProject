@@ -1,0 +1,2663 @@
+<?xml version="1.0" encoding="utf-8"?>
+<DataSchemaModel FileFormatVersion="1.2" SchemaVersion="2.9" DspName="Microsoft.Data.Tools.Schema.Sql.Sql130DatabaseSchemaProvider" CollationLcid="1033" CollationCaseSensitive="False" xmlns="http://schemas.microsoft.com/sqlserver/dac/Serialization/2012/02">
+	<Header>
+		<CustomData Category="AnsiNulls">
+			<Metadata Name="AnsiNulls" Value="True" />
+		</CustomData>
+		<CustomData Category="QuotedIdentifier">
+			<Metadata Name="QuotedIdentifier" Value="True" />
+		</CustomData>
+		<CustomData Category="CompatibilityMode">
+			<Metadata Name="CompatibilityMode" Value="130" />
+		</CustomData>
+		<CustomData Category="Reference" Type="Assembly">
+			<Metadata Name="LogicalName" Value="Hotels.dll" />
+			<Metadata Name="FileName" Value="D:\BITBUCKET\HOTELPROJECT\HOTELS\OBJ\DEBUG\HOTELS.DLL" />
+			<Metadata Name="AssemblyName" Value="Hotels" />
+			<Metadata Name="PermissionSet" Value="SAFE" />
+			<Metadata Name="Owner" Value="" />
+			<Metadata Name="GenerateSqlClrDdl" Value="True" />
+			<Metadata Name="IsVisible" Value="True" />
+			<Metadata Name="IsModelAware" Value="True" />
+			<Metadata Name="SkipCreationIfEmpty" Value="True" />
+			<Metadata Name="AssemblySymbolsName" Value="D:\Bitbucket\HotelProject\Hotels\obj\Debug\Hotels.pdb" />
+		</CustomData>
+		<CustomData Category="SqlCmdVariables" Type="SqlCmdVariable" />
+	</Header>
+	<Model>
+		<Element Type="SqlDatabaseOptions">
+			<Property Name="Collation" Value="SQL_Latin1_General_CP1_CI_AS" />
+			<Property Name="IsAnsiNullDefaultOn" Value="True" />
+			<Property Name="IsAnsiNullsOn" Value="True" />
+			<Property Name="IsAnsiWarningsOn" Value="True" />
+			<Property Name="IsArithAbortOn" Value="True" />
+			<Property Name="IsConcatNullYieldsNullOn" Value="True" />
+			<Property Name="IsTornPageProtectionOn" Value="False" />
+			<Property Name="IsFullTextEnabled" Value="True" />
+			<Property Name="PageVerifyMode" Value="3" />
+			<Property Name="DefaultLanguage" Value="" />
+			<Property Name="DefaultFullTextLanguage" Value="" />
+			<Property Name="QueryStoreStaleQueryThreshold" Value="367" />
+			<Relationship Name="DefaultFilegroup">
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[PRIMARY]" />
+				</Entry>
+			</Relationship>
+		</Element>
+		<Element Type="SqlProcedure" Name="[dbo].[Book]">
+			<Property Name="BodyScript">
+				<Value><![CDATA[
+	
+	--we want to find any HotelRoomsINfo id for inserting in booked table
+
+	DECLARE @HotelBookID int
+
+	SET @HotelBookID = (select top 1
+						h2.ID
+						from Hotels as h1
+						join HotelsRoomsInfo as h2
+						on h1.ID = h2.HotelId
+						where h1.City = @CityName and h1.[Name] = @HotelName and h2.[Money] = @Money and h2.BedQuantity = @BedQuantity)
+
+	DECLARE @SuchPassportId int
+	
+	SET @SuchPassportId = (		select count(*)
+								from PersonsInfo
+								where Passportid = @passportId
+							)
+	IF @SuchPassportId = 0
+	BEGIN
+	INSERT INTO PersonsInfo([Name],[Surname],[Passportid],[Gender],[Email],[City],[Country],[CreditCardNumber])
+	VALUES (@name, @surname, @passportId, @gender, @email, @city, @country,@creditCardNumber)
+	END
+
+	INSERT INTO booked([From],[To],[HotelidRoom],[Passportid])
+	VALUES (@from, @to, @HotelBookID, @passportId)
+
+
+
+RETURN 0]]></Value>
+			</Property>
+			<Property Name="IsAnsiNullsOn" Value="True" />
+			<Relationship Name="BodyDependencies">
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[int]" />
+				</Entry>
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[int]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Hotels]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[HotelsRoomsInfo]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Hotels].[ID]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[HotelsRoomsInfo].[HotelId]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[HotelsRoomsInfo].[ID]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Hotels].[City]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Book].[@CityName]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Hotels].[Name]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Book].[@HotelName]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[HotelsRoomsInfo].[Money]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Book].[@Money]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[HotelsRoomsInfo].[BedQuantity]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Book].[@BedQuantity]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[PersonsInfo]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[PersonsInfo].[Passportid]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Book].[@passportId]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[PersonsInfo]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[PersonsInfo].[Name]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[PersonsInfo].[Surname]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[PersonsInfo].[Passportid]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[PersonsInfo].[Gender]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[PersonsInfo].[Email]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[PersonsInfo].[City]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[PersonsInfo].[Country]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[PersonsInfo].[CreditCardNumber]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Book].[@name]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Book].[@surname]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Book].[@gender]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Book].[@email]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Book].[@city]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Book].[@country]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Book].[@creditCardNumber]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[booked]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[booked].[From]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[booked].[To]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[booked].[HotelidRoom]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[booked].[Passportid]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Book].[@from]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Book].[@to]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="Parameters">
+				<Entry>
+					<Element Type="SqlSubroutineParameter" Name="[dbo].[Book].[@passportId]">
+						<Relationship Name="Type">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Property Name="Length" Value="10" />
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[varchar]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSubroutineParameter" Name="[dbo].[Book].[@name]">
+						<Relationship Name="Type">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Property Name="Length" Value="20" />
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[nvarchar]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSubroutineParameter" Name="[dbo].[Book].[@surname]">
+						<Relationship Name="Type">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Property Name="Length" Value="20" />
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[nvarchar]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSubroutineParameter" Name="[dbo].[Book].[@gender]">
+						<Relationship Name="Type">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Property Name="Length" Value="1" />
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[nchar]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSubroutineParameter" Name="[dbo].[Book].[@email]">
+						<Relationship Name="Type">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Property Name="Length" Value="30" />
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[nvarchar]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSubroutineParameter" Name="[dbo].[Book].[@city]">
+						<Relationship Name="Type">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Property Name="Length" Value="20" />
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[nvarchar]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSubroutineParameter" Name="[dbo].[Book].[@country]">
+						<Relationship Name="Type">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Property Name="Length" Value="30" />
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[nvarchar]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSubroutineParameter" Name="[dbo].[Book].[@creditCardNumber]">
+						<Relationship Name="Type">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Property Name="Length" Value="15" />
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[nvarchar]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSubroutineParameter" Name="[dbo].[Book].[@from]">
+						<Relationship Name="Type">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[datetime]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSubroutineParameter" Name="[dbo].[Book].[@to]">
+						<Relationship Name="Type">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[datetime]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSubroutineParameter" Name="[dbo].[Book].[@HotelName]">
+						<Relationship Name="Type">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Property Name="Length" Value="50" />
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[varchar]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSubroutineParameter" Name="[dbo].[Book].[@CityName]">
+						<Relationship Name="Type">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Property Name="Length" Value="50" />
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[varchar]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSubroutineParameter" Name="[dbo].[Book].[@BedQuantity]">
+						<Relationship Name="Type">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[tinyint]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSubroutineParameter" Name="[dbo].[Book].[@Money]">
+						<Relationship Name="Type">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[money]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+			</Relationship>
+			<Relationship Name="Schema">
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[dbo]" />
+				</Entry>
+			</Relationship>
+			<Annotation Type="SysCommentsObjectAnnotation">
+				<Property Name="Length" Value="1239" />
+				<Property Name="StartLine" Value="1" />
+				<Property Name="StartColumn" Value="1" />
+				<Property Name="HeaderContents" Value="CREATE PROCEDURE [dbo].[Book]&#xD;&#xA;&#x9;@passportId varchar(10),&#xD;&#xA;&#x9;@name nvarchar(20),&#xD;&#xA;&#x9;@surname nvarchar(20),&#xD;&#xA;&#x9;@gender nchar(1),&#xD;&#xA;&#x9;@email nvarchar(30),&#xD;&#xA;&#x9;@city nvarchar(20),&#xD;&#xA;&#x9;@country nvarchar(30),&#xD;&#xA;&#x9;@creditCardNumber nvarchar(15),&#xD;&#xA;&#x9;@from datetime,&#xD;&#xA;&#x9;@to datetime,&#xD;&#xA;&#x9;@HotelName varchar(50),&#xD;&#xA;&#x9;@CityName varchar(50),&#xD;&#xA;&#x9;@BedQuantity tinyint,&#xD;&#xA;&#x9;@Money money&#xD;&#xA;AS" />
+			</Annotation>
+		</Element>
+		<Element Type="SqlTable" Name="[dbo].[booked]">
+			<Property Name="IsAnsiNullsOn" Value="True" />
+			<Relationship Name="Columns">
+				<Entry>
+					<Element Type="SqlSimpleColumn" Name="[dbo].[booked].[ID]">
+						<Property Name="IsNullable" Value="False" />
+						<Property Name="IsIdentity" Value="True" />
+						<Relationship Name="TypeSpecifier">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[int]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSimpleColumn" Name="[dbo].[booked].[From]">
+						<Property Name="IsNullable" Value="False" />
+						<Relationship Name="TypeSpecifier">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[datetime]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSimpleColumn" Name="[dbo].[booked].[To]">
+						<Property Name="IsNullable" Value="False" />
+						<Relationship Name="TypeSpecifier">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[datetime]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSimpleColumn" Name="[dbo].[booked].[HotelidRoom]">
+						<Property Name="IsNullable" Value="False" />
+						<Relationship Name="TypeSpecifier">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[int]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSimpleColumn" Name="[dbo].[booked].[Passportid]">
+						<Property Name="IsNullable" Value="False" />
+						<Relationship Name="TypeSpecifier">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Property Name="Length" Value="10" />
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[varchar]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+			</Relationship>
+			<Relationship Name="Schema">
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[dbo]" />
+				</Entry>
+			</Relationship>
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="3" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="4" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="5" />
+		</Element>
+		<Element Type="SqlForeignKeyConstraint" Name="[dbo].[Booked_to_Hotels_ref]">
+			<Property Name="OnDeleteAction" Value="1" />
+			<Relationship Name="Columns">
+				<Entry>
+					<References Name="[dbo].[booked].[HotelidRoom]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="DefiningTable">
+				<Entry>
+					<References Name="[dbo].[booked]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="ForeignColumns">
+				<Entry>
+					<References Name="[dbo].[HotelsRoomsInfo].[ID]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="ForeignTable">
+				<Entry>
+					<References Name="[dbo].[HotelsRoomsInfo]" />
+				</Entry>
+			</Relationship>
+			<AttachedAnnotation Disambiguator="4" />
+		</Element>
+		<Element Type="SqlPrimaryKeyConstraint" Name="[dbo].[bookedPK]">
+			<Relationship Name="ColumnSpecifications">
+				<Entry>
+					<Element Type="SqlIndexedColumnSpecification">
+						<Relationship Name="Column">
+							<Entry>
+								<References Name="[dbo].[booked].[ID]" />
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+			</Relationship>
+			<Relationship Name="DefiningTable">
+				<Entry>
+					<References Name="[dbo].[booked]" />
+				</Entry>
+			</Relationship>
+			<AttachedAnnotation Disambiguator="3" />
+		</Element>
+		<Element Type="SqlProcedure" Name="[dbo].[DeleteHotel]">
+			<Property Name="BodyScript">
+				<Value><![CDATA[
+	
+	DELETE from Hotels
+	WHERE ID = (SELECT ID
+				FROM Hotels as h
+				WHERE h.[Name] = @HotelName AND h.[City] = @CityName)]]></Value>
+			</Property>
+			<Property Name="IsAnsiNullsOn" Value="True" />
+			<Relationship Name="BodyDependencies">
+				<Entry>
+					<References Name="[dbo].[Hotels]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Hotels].[ID]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Hotels]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Hotels].[ID]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Hotels].[Name]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[DeleteHotel].[@HotelName]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Hotels].[City]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[DeleteHotel].[@CityName]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="Parameters">
+				<Entry>
+					<Element Type="SqlSubroutineParameter" Name="[dbo].[DeleteHotel].[@HotelName]">
+						<Relationship Name="Type">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Property Name="Length" Value="50" />
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[varchar]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSubroutineParameter" Name="[dbo].[DeleteHotel].[@CityName]">
+						<Relationship Name="Type">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Property Name="Length" Value="50" />
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[varchar]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+			</Relationship>
+			<Relationship Name="Schema">
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[dbo]" />
+				</Entry>
+			</Relationship>
+			<Annotation Type="SysCommentsObjectAnnotation">
+				<Property Name="Length" Value="219" />
+				<Property Name="StartLine" Value="1" />
+				<Property Name="StartColumn" Value="1" />
+				<Property Name="HeaderContents" Value="CREATE PROCEDURE [dbo].[DeleteHotel]&#xD;&#xA;&#x9;@HotelName varchar(50),&#xD;&#xA;&#x9;@CityName varchar(50)&#xD;&#xA;AS" />
+			</Annotation>
+		</Element>
+		<Element Type="SqlTable" Name="[dbo].[Descriptionn]">
+			<Property Name="IsAnsiNullsOn" Value="True" />
+			<Relationship Name="Columns">
+				<Entry>
+					<Element Type="SqlSimpleColumn" Name="[dbo].[Descriptionn].[ID]">
+						<Property Name="IsNullable" Value="False" />
+						<Property Name="IsIdentity" Value="True" />
+						<Relationship Name="TypeSpecifier">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[int]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSimpleColumn" Name="[dbo].[Descriptionn].[Short]">
+						<Property Name="IsNullable" Value="False" />
+						<Relationship Name="TypeSpecifier">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Property Name="Length" Value="600" />
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[nvarchar]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSimpleColumn" Name="[dbo].[Descriptionn].[Long]">
+						<Property Name="IsNullable" Value="False" />
+						<Relationship Name="TypeSpecifier">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Property Name="Length" Value="1500" />
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[nvarchar]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSimpleColumn" Name="[dbo].[Descriptionn].[Hotelid]">
+						<Property Name="IsNullable" Value="False" />
+						<Relationship Name="TypeSpecifier">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[int]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+			</Relationship>
+			<Relationship Name="Schema">
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[dbo]" />
+				</Entry>
+			</Relationship>
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="6" />
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="7" />
+		</Element>
+		<Element Type="SqlProcedure" Name="[dbo].[FreeRoomsCertainHotel]">
+			<Property Name="BodyScript">
+				<Value><![CDATA[
+	
+	declare @t table(HotelName nchar(20), City nchar(20), Bed tinyint, Room smallint, [Money] money)
+	insert @t
+	exec SearchST @HotelName, @CityName, @From, null, null
+
+	select Bed,[Money]
+	from @t
+	group by Bed,[Money]]]></Value>
+			</Property>
+			<Property Name="IsAnsiNullsOn" Value="True" />
+			<Relationship Name="BodyDependencies">
+				<Entry>
+					<References Name="[dbo].[SearchST]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[FreeRoomsCertainHotel].[@HotelName]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[FreeRoomsCertainHotel].[@CityName]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[FreeRoomsCertainHotel].[@From]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[FreeRoomsCertainHotel].[@t].[Bed]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[FreeRoomsCertainHotel].[@t].[Money]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="DynamicObjects">
+				<Entry>
+					<Element Type="SqlDynamicColumnSource" Name="[dbo].[FreeRoomsCertainHotel].[@t]">
+						<Relationship Name="Columns">
+							<Entry>
+								<Element Type="SqlSimpleColumn" Name="[dbo].[FreeRoomsCertainHotel].[@t].[HotelName]">
+									<Relationship Name="TypeSpecifier">
+										<Entry>
+											<Element Type="SqlTypeSpecifier">
+												<Property Name="Length" Value="20" />
+												<Relationship Name="Type">
+													<Entry>
+														<References ExternalSource="BuiltIns" Name="[nchar]" />
+													</Entry>
+												</Relationship>
+											</Element>
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+							<Entry>
+								<Element Type="SqlSimpleColumn" Name="[dbo].[FreeRoomsCertainHotel].[@t].[City]">
+									<Relationship Name="TypeSpecifier">
+										<Entry>
+											<Element Type="SqlTypeSpecifier">
+												<Property Name="Length" Value="20" />
+												<Relationship Name="Type">
+													<Entry>
+														<References ExternalSource="BuiltIns" Name="[nchar]" />
+													</Entry>
+												</Relationship>
+											</Element>
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+							<Entry>
+								<Element Type="SqlSimpleColumn" Name="[dbo].[FreeRoomsCertainHotel].[@t].[Bed]">
+									<Relationship Name="TypeSpecifier">
+										<Entry>
+											<Element Type="SqlTypeSpecifier">
+												<Relationship Name="Type">
+													<Entry>
+														<References ExternalSource="BuiltIns" Name="[tinyint]" />
+													</Entry>
+												</Relationship>
+											</Element>
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+							<Entry>
+								<Element Type="SqlSimpleColumn" Name="[dbo].[FreeRoomsCertainHotel].[@t].[Room]">
+									<Relationship Name="TypeSpecifier">
+										<Entry>
+											<Element Type="SqlTypeSpecifier">
+												<Relationship Name="Type">
+													<Entry>
+														<References ExternalSource="BuiltIns" Name="[smallint]" />
+													</Entry>
+												</Relationship>
+											</Element>
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+							<Entry>
+								<Element Type="SqlSimpleColumn" Name="[dbo].[FreeRoomsCertainHotel].[@t].[Money]">
+									<Relationship Name="TypeSpecifier">
+										<Entry>
+											<Element Type="SqlTypeSpecifier">
+												<Relationship Name="Type">
+													<Entry>
+														<References ExternalSource="BuiltIns" Name="[money]" />
+													</Entry>
+												</Relationship>
+											</Element>
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+			</Relationship>
+			<Relationship Name="Parameters">
+				<Entry>
+					<Element Type="SqlSubroutineParameter" Name="[dbo].[FreeRoomsCertainHotel].[@HotelName]">
+						<Relationship Name="Type">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Property Name="Length" Value="50" />
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[varchar]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSubroutineParameter" Name="[dbo].[FreeRoomsCertainHotel].[@CityName]">
+						<Relationship Name="Type">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Property Name="Length" Value="50" />
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[varchar]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSubroutineParameter" Name="[dbo].[FreeRoomsCertainHotel].[@From]">
+						<Relationship Name="Type">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[datetime]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSubroutineParameter" Name="[dbo].[FreeRoomsCertainHotel].[@To]">
+						<Property Name="DefaultExpressionScript">
+							<Value><![CDATA[null]]></Value>
+						</Property>
+						<Relationship Name="Type">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[datetime]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSubroutineParameter" Name="[dbo].[FreeRoomsCertainHotel].[@BedQuantity]">
+						<Relationship Name="Type">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[tinyint]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+			</Relationship>
+			<Relationship Name="Schema">
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[dbo]" />
+				</Entry>
+			</Relationship>
+			<Annotation Type="SysCommentsObjectAnnotation">
+				<Property Name="Length" Value="392" />
+				<Property Name="StartLine" Value="1" />
+				<Property Name="StartColumn" Value="1" />
+				<Property Name="HeaderContents" Value="CREATE PROCEDURE [dbo].[FreeRoomsCertainHotel]&#xD;&#xA;&#x9;@HotelName varchar(50),&#xD;&#xA;&#x9;@CityName varchar(50),&#xD;&#xA;&#x9;@From datetime,&#xD;&#xA;&#x9;@To datetime = null,&#xD;&#xA;&#x9;@BedQuantity tinyint&#xD;&#xA;AS" />
+			</Annotation>
+		</Element>
+		<Element Type="SqlProcedure" Name="[dbo].[getRoomInfoPicture]">
+			<Property Name="BodyScript">
+				<Value><![CDATA[
+	select res1.[Name] as HotelName,res2.[Source] as Nkar,res3.Long as Long 
+	from Hotels as res1
+	join Pictures as res2
+	on res1.ID = res2.Hotelid
+	join Descriptionn as res3
+	on res1.ID = res3.Hotelid
+	where res1.ID = @id
+
+
+RETURN 0]]></Value>
+			</Property>
+			<Property Name="IsAnsiNullsOn" Value="True" />
+			<Relationship Name="BodyDependencies">
+				<Entry>
+					<References Name="[dbo].[Hotels]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Pictures]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Hotels].[ID]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Pictures].[Hotelid]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Descriptionn]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Hotels].[ID]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Descriptionn].[Hotelid]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Hotels].[Name]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Pictures].[Source]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Descriptionn].[Long]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[getRoomInfoPicture].[@id]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="Parameters">
+				<Entry>
+					<Element Type="SqlSubroutineParameter" Name="[dbo].[getRoomInfoPicture].[@id]">
+						<Relationship Name="Type">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[int]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+			</Relationship>
+			<Relationship Name="Schema">
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[dbo]" />
+				</Entry>
+			</Relationship>
+			<Annotation Type="SysCommentsObjectAnnotation">
+				<Property Name="Length" Value="298" />
+				<Property Name="StartLine" Value="1" />
+				<Property Name="StartColumn" Value="1" />
+				<Property Name="HeaderContents" Value="CREATE PROCEDURE [dbo].[getRoomInfoPicture]&#xD;&#xA;&#x9;@id int&#xD;&#xA;AS" />
+			</Annotation>
+		</Element>
+		<Element Type="SqlTable" Name="[dbo].[Hotels]">
+			<Property Name="IsAnsiNullsOn" Value="True" />
+			<Relationship Name="Columns">
+				<Entry>
+					<Element Type="SqlSimpleColumn" Name="[dbo].[Hotels].[ID]">
+						<Property Name="IsNullable" Value="False" />
+						<Property Name="IsIdentity" Value="True" />
+						<Relationship Name="TypeSpecifier">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[int]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSimpleColumn" Name="[dbo].[Hotels].[Name]">
+						<Property Name="IsNullable" Value="False" />
+						<Relationship Name="TypeSpecifier">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Property Name="Length" Value="50" />
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[varchar]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSimpleColumn" Name="[dbo].[Hotels].[City]">
+						<Property Name="IsNullable" Value="False" />
+						<Relationship Name="TypeSpecifier">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Property Name="Length" Value="50" />
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[varchar]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+			</Relationship>
+			<Relationship Name="Schema">
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[dbo]" />
+				</Entry>
+			</Relationship>
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="8" />
+		</Element>
+		<Element Type="SqlForeignKeyConstraint" Name="[dbo].[Hotels_Info]">
+			<Property Name="OnDeleteAction" Value="1" />
+			<Relationship Name="Columns">
+				<Entry>
+					<References Name="[dbo].[HotelsRoomsInfo].[HotelId]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="DefiningTable">
+				<Entry>
+					<References Name="[dbo].[HotelsRoomsInfo]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="ForeignColumns">
+				<Entry>
+					<References Name="[dbo].[Hotels].[ID]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="ForeignTable">
+				<Entry>
+					<References Name="[dbo].[Hotels]" />
+				</Entry>
+			</Relationship>
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="9" />
+		</Element>
+		<Element Type="SqlForeignKeyConstraint" Name="[dbo].[Hotels_Info_Pictures]">
+			<Property Name="OnDeleteAction" Value="1" />
+			<Relationship Name="Columns">
+				<Entry>
+					<References Name="[dbo].[Pictures].[Hotelid]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="DefiningTable">
+				<Entry>
+					<References Name="[dbo].[Pictures]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="ForeignColumns">
+				<Entry>
+					<References Name="[dbo].[Hotels].[ID]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="ForeignTable">
+				<Entry>
+					<References Name="[dbo].[Hotels]" />
+				</Entry>
+			</Relationship>
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="10" />
+		</Element>
+		<Element Type="SqlPrimaryKeyConstraint" Name="[dbo].[hotelsPK]">
+			<Relationship Name="ColumnSpecifications">
+				<Entry>
+					<Element Type="SqlIndexedColumnSpecification">
+						<Relationship Name="Column">
+							<Entry>
+								<References Name="[dbo].[Hotels].[ID]" />
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+			</Relationship>
+			<Relationship Name="DefiningTable">
+				<Entry>
+					<References Name="[dbo].[Hotels]" />
+				</Entry>
+			</Relationship>
+			<AttachedAnnotation Disambiguator="8" />
+		</Element>
+		<Element Type="SqlTable" Name="[dbo].[HotelsRoomsInfo]">
+			<Property Name="IsAnsiNullsOn" Value="True" />
+			<Relationship Name="Columns">
+				<Entry>
+					<Element Type="SqlSimpleColumn" Name="[dbo].[HotelsRoomsInfo].[HotelId]">
+						<Property Name="IsNullable" Value="False" />
+						<Relationship Name="TypeSpecifier">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[int]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSimpleColumn" Name="[dbo].[HotelsRoomsInfo].[RoomNumber]">
+						<Property Name="IsNullable" Value="False" />
+						<Relationship Name="TypeSpecifier">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[smallint]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSimpleColumn" Name="[dbo].[HotelsRoomsInfo].[BedQuantity]">
+						<Property Name="IsNullable" Value="False" />
+						<Relationship Name="TypeSpecifier">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[tinyint]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSimpleColumn" Name="[dbo].[HotelsRoomsInfo].[Money]">
+						<Property Name="IsNullable" Value="False" />
+						<Relationship Name="TypeSpecifier">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[money]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSimpleColumn" Name="[dbo].[HotelsRoomsInfo].[ID]">
+						<Property Name="IsNullable" Value="False" />
+						<Property Name="IsIdentity" Value="True" />
+						<Relationship Name="TypeSpecifier">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[int]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+			</Relationship>
+			<Relationship Name="Schema">
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[dbo]" />
+				</Entry>
+			</Relationship>
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="11" />
+			<AttachedAnnotation Disambiguator="9" />
+		</Element>
+		<Element Type="SqlProcedure" Name="[dbo].[InsertDescription]">
+			<Property Name="BodyScript">
+				<Value><![CDATA[
+
+	DECLARE @HoteliD int
+	DECLARE @CountInDesc int
+	Set @HoteliD = (SELECT ID FROM Hotels Where [Name] = @HotelName AND [City] = @CityName)
+	SET @CountInDesc = isnull((SELECT COUNT(*) FROM Descriptionn WHERE Hotelid = @HoteliD),0)
+
+	IF @CountInDesc = 1
+	BEGIN
+		RAISERROR ( 'Whoops, Such Hotel Description already Exsists',18,1)		
+	END
+	ELSE
+	BEGIN
+		INSERT INTO Descriptionn([Short],[Long],[Hotelid])
+			VALUES (@ShortDescription, @LongDescription, @HoteliD);
+	END]]></Value>
+			</Property>
+			<Property Name="IsAnsiNullsOn" Value="True" />
+			<Relationship Name="BodyDependencies">
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[int]" />
+				</Entry>
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[int]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Hotels]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Hotels].[ID]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Hotels].[Name]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[InsertDescription].[@HotelName]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Hotels].[City]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[InsertDescription].[@CityName]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Descriptionn]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Descriptionn].[Hotelid]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Descriptionn]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Descriptionn].[Short]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Descriptionn].[Long]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Descriptionn].[Hotelid]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[InsertDescription].[@ShortDescription]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[InsertDescription].[@LongDescription]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="Parameters">
+				<Entry>
+					<Element Type="SqlSubroutineParameter" Name="[dbo].[InsertDescription].[@HotelName]">
+						<Relationship Name="Type">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Property Name="Length" Value="50" />
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[varchar]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSubroutineParameter" Name="[dbo].[InsertDescription].[@CityName]">
+						<Relationship Name="Type">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Property Name="Length" Value="50" />
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[varchar]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSubroutineParameter" Name="[dbo].[InsertDescription].[@ShortDescription]">
+						<Relationship Name="Type">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Property Name="Length" Value="600" />
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[nvarchar]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSubroutineParameter" Name="[dbo].[InsertDescription].[@LongDescription]">
+						<Relationship Name="Type">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Property Name="Length" Value="1500" />
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[nvarchar]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+			</Relationship>
+			<Relationship Name="Schema">
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[dbo]" />
+				</Entry>
+			</Relationship>
+			<Annotation Type="SysCommentsObjectAnnotation">
+				<Property Name="Length" Value="645" />
+				<Property Name="StartLine" Value="1" />
+				<Property Name="StartColumn" Value="1" />
+				<Property Name="HeaderContents" Value="CREATE PROCEDURE [dbo].[InsertDescription]&#xD;&#xA;&#x9;@HotelName varchar(50),&#xD;&#xA;&#x9;@CityName varchar(50),&#xD;&#xA;&#x9;@ShortDescription nvarchar(600),&#xD;&#xA;&#x9;@LongDescription nvarchar(1500)&#xD;&#xA;AS" />
+			</Annotation>
+		</Element>
+		<Element Type="SqlProcedure" Name="[dbo].[InsertFromWindow]">
+			<Property Name="BodyScript">
+				<Value><![CDATA[
+	BEGIN TRANSACTION;
+--ete masnachyux chka,@HotID -n klini 0, piti insert anenq
+	DECLARE @HotID int
+
+	Set @HotID = isnull((SELECT h.ID FROM Hotels h WHERE h.City = @CityName AND h.[Name] = @HotelName),0)
+
+
+	IF @HotID = 0
+	BEGIN
+		INSERT INTO Hotels([Name], [City])
+			VALUES (@HotelName, @CityName);
+
+	SET @HotID = SCOPE_IDENTITY()
+	END
+--hima piti stugenq tenc hamari senyakn ka mer hotel-um te voch
+--bayc ete stugum enq u tesnum enq vor ka, RAISERROR enq anum
+
+--	RAISERROR ( 'Whoops, Such Hotel Room already Exsists',1,1)
+
+		
+       IF EXISTS  (select RoomNumber
+				    from HotelsRoomsInfo
+				    where HotelId = @HotID AND RoomNumber = @RoomNumber)
+		BEGIN
+		RAISERROR ( 'Whoops, Such Hotel Room already Exsists',18,1)
+		END
+		ELSE
+		BEGIN
+		INSERT INTO HotelsRoomsInfo([HotelId],[BedQuantity],[RoomNumber],[Money])
+				Values (@HotID, @BedQuantity, @RoomNumber, @Money);
+		END
+	COMMIT TRANSACTION;]]></Value>
+			</Property>
+			<Property Name="IsAnsiNullsOn" Value="True" />
+			<Relationship Name="BodyDependencies">
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[int]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Hotels]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Hotels].[ID]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Hotels].[City]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[InsertFromWindow].[@CityName]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Hotels].[Name]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[InsertFromWindow].[@HotelName]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Hotels]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Hotels].[Name]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Hotels].[City]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[HotelsRoomsInfo]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[HotelsRoomsInfo].[RoomNumber]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[HotelsRoomsInfo].[HotelId]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[InsertFromWindow].[@RoomNumber]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[HotelsRoomsInfo]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[HotelsRoomsInfo].[HotelId]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[HotelsRoomsInfo].[BedQuantity]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[HotelsRoomsInfo].[RoomNumber]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[HotelsRoomsInfo].[Money]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[InsertFromWindow].[@BedQuantity]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[InsertFromWindow].[@Money]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="Parameters">
+				<Entry>
+					<Element Type="SqlSubroutineParameter" Name="[dbo].[InsertFromWindow].[@HotelName]">
+						<Relationship Name="Type">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Property Name="Length" Value="50" />
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[varchar]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSubroutineParameter" Name="[dbo].[InsertFromWindow].[@CityName]">
+						<Relationship Name="Type">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Property Name="Length" Value="50" />
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[varchar]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSubroutineParameter" Name="[dbo].[InsertFromWindow].[@RoomNumber]">
+						<Relationship Name="Type">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[smallint]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSubroutineParameter" Name="[dbo].[InsertFromWindow].[@BedQuantity]">
+						<Relationship Name="Type">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[tinyint]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSubroutineParameter" Name="[dbo].[InsertFromWindow].[@Money]">
+						<Relationship Name="Type">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[money]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+			</Relationship>
+			<Relationship Name="Schema">
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[dbo]" />
+				</Entry>
+			</Relationship>
+			<Annotation Type="SysCommentsObjectAnnotation">
+				<Property Name="Length" Value="1100" />
+				<Property Name="StartLine" Value="1" />
+				<Property Name="StartColumn" Value="1" />
+				<Property Name="HeaderContents" Value="CREATE PROCEDURE [dbo].[InsertFromWindow]&#xD;&#xA;&#x9;@HotelName varchar(50),&#xD;&#xA;&#x9;@CityName varchar(50),&#xD;&#xA;&#x9;@RoomNumber smallint,&#xD;&#xA;&#x9;@BedQuantity tinyint,&#xD;&#xA;&#x9;@Money money&#xD;&#xA;&#x9;&#xD;&#xA;AS" />
+			</Annotation>
+		</Element>
+		<Element Type="SqlProcedure" Name="[dbo].[InsertPicture]">
+			<Property Name="BodyScript">
+				<Value><![CDATA[
+
+	DECLARE @HoteliD int
+
+	SET @HoteliD = (SELECT ID
+					FROM Hotels
+					Where [Name] = @HotelName AND [City] = @CityName)
+
+	INSERT INTO Pictures([Hotelid],[Source])
+		VALUES (@HoteliD, @PicUrl);]]></Value>
+			</Property>
+			<Property Name="IsAnsiNullsOn" Value="True" />
+			<Relationship Name="BodyDependencies">
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[int]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Hotels]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Hotels].[ID]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Hotels].[Name]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[InsertPicture].[@HotelName]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Hotels].[City]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[InsertPicture].[@CityName]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Pictures]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Pictures].[Hotelid]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Pictures].[Source]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[InsertPicture].[@PicUrl]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="Parameters">
+				<Entry>
+					<Element Type="SqlSubroutineParameter" Name="[dbo].[InsertPicture].[@HotelName]">
+						<Relationship Name="Type">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Property Name="Length" Value="50" />
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[varchar]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSubroutineParameter" Name="[dbo].[InsertPicture].[@CityName]">
+						<Relationship Name="Type">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Property Name="Length" Value="50" />
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[varchar]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSubroutineParameter" Name="[dbo].[InsertPicture].[@PicUrl]">
+						<Relationship Name="Type">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Property Name="Length" Value="150" />
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[nvarchar]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+			</Relationship>
+			<Relationship Name="Schema">
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[dbo]" />
+				</Entry>
+			</Relationship>
+			<Annotation Type="SysCommentsObjectAnnotation">
+				<Property Name="Length" Value="322" />
+				<Property Name="StartLine" Value="1" />
+				<Property Name="StartColumn" Value="1" />
+				<Property Name="HeaderContents" Value="CREATE PROCEDURE [dbo].[InsertPicture]&#xD;&#xA;&#x9;@HotelName varchar(50),&#xD;&#xA;&#x9;@CityName varchar(50),&#xD;&#xA;&#x9;@PicUrl nvarchar(150)&#xD;&#xA;AS" />
+			</Annotation>
+		</Element>
+		<Element Type="SqlPrimaryKeyConstraint" Name="[dbo].[person_id]">
+			<Relationship Name="ColumnSpecifications">
+				<Entry>
+					<Element Type="SqlIndexedColumnSpecification">
+						<Relationship Name="Column">
+							<Entry>
+								<References Name="[dbo].[PersonsInfo].[Passportid]" />
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+			</Relationship>
+			<Relationship Name="DefiningTable">
+				<Entry>
+					<References Name="[dbo].[PersonsInfo]" />
+				</Entry>
+			</Relationship>
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="12" />
+		</Element>
+		<Element Type="SqlTable" Name="[dbo].[PersonsInfo]">
+			<Property Name="IsAnsiNullsOn" Value="True" />
+			<Relationship Name="Columns">
+				<Entry>
+					<Element Type="SqlSimpleColumn" Name="[dbo].[PersonsInfo].[Passportid]">
+						<Property Name="IsNullable" Value="False" />
+						<Relationship Name="TypeSpecifier">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Property Name="Length" Value="10" />
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[varchar]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSimpleColumn" Name="[dbo].[PersonsInfo].[Name]">
+						<Property Name="IsNullable" Value="False" />
+						<Relationship Name="TypeSpecifier">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Property Name="Length" Value="20" />
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[nvarchar]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSimpleColumn" Name="[dbo].[PersonsInfo].[Surname]">
+						<Property Name="IsNullable" Value="False" />
+						<Relationship Name="TypeSpecifier">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Property Name="Length" Value="20" />
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[nvarchar]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSimpleColumn" Name="[dbo].[PersonsInfo].[Gender]">
+						<Property Name="IsNullable" Value="False" />
+						<Relationship Name="TypeSpecifier">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Property Name="Length" Value="1" />
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[nchar]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSimpleColumn" Name="[dbo].[PersonsInfo].[Email]">
+						<Property Name="IsNullable" Value="False" />
+						<Relationship Name="TypeSpecifier">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Property Name="Length" Value="30" />
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[nvarchar]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSimpleColumn" Name="[dbo].[PersonsInfo].[City]">
+						<Property Name="IsNullable" Value="False" />
+						<Relationship Name="TypeSpecifier">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Property Name="Length" Value="20" />
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[nvarchar]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSimpleColumn" Name="[dbo].[PersonsInfo].[CreditCardNumber]">
+						<Property Name="IsNullable" Value="False" />
+						<Relationship Name="TypeSpecifier">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Property Name="Length" Value="15" />
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[nvarchar]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSimpleColumn" Name="[dbo].[PersonsInfo].[Country]">
+						<Property Name="IsNullable" Value="False" />
+						<Relationship Name="TypeSpecifier">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Property Name="Length" Value="30" />
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[nvarchar]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+			</Relationship>
+			<Relationship Name="Schema">
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[dbo]" />
+				</Entry>
+			</Relationship>
+			<AttachedAnnotation Disambiguator="12" />
+		</Element>
+		<Element Type="SqlTable" Name="[dbo].[Pictures]">
+			<Property Name="IsAnsiNullsOn" Value="True" />
+			<Relationship Name="Columns">
+				<Entry>
+					<Element Type="SqlSimpleColumn" Name="[dbo].[Pictures].[Id]">
+						<Property Name="IsNullable" Value="False" />
+						<Property Name="IsIdentity" Value="True" />
+						<Relationship Name="TypeSpecifier">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[int]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSimpleColumn" Name="[dbo].[Pictures].[Source]">
+						<Property Name="IsNullable" Value="False" />
+						<Relationship Name="TypeSpecifier">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Property Name="Length" Value="150" />
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[nvarchar]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSimpleColumn" Name="[dbo].[Pictures].[Hotelid]">
+						<Property Name="IsNullable" Value="False" />
+						<Relationship Name="TypeSpecifier">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[int]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+			</Relationship>
+			<Relationship Name="Schema">
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[dbo]" />
+				</Entry>
+			</Relationship>
+			<Annotation Type="SqlInlineConstraintAnnotation" Disambiguator="13" />
+			<AttachedAnnotation Disambiguator="10" />
+		</Element>
+		<Element Type="SqlPrimaryKeyConstraint" Name="[dbo].[PicturesTableID]">
+			<Relationship Name="ColumnSpecifications">
+				<Entry>
+					<Element Type="SqlIndexedColumnSpecification">
+						<Relationship Name="Column">
+							<Entry>
+								<References Name="[dbo].[Pictures].[Id]" />
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+			</Relationship>
+			<Relationship Name="DefiningTable">
+				<Entry>
+					<References Name="[dbo].[Pictures]" />
+				</Entry>
+			</Relationship>
+			<AttachedAnnotation Disambiguator="13" />
+		</Element>
+		<Element Type="SqlPrimaryKeyConstraint" Name="[dbo].[Pr_Key_DESC]">
+			<Relationship Name="ColumnSpecifications">
+				<Entry>
+					<Element Type="SqlIndexedColumnSpecification">
+						<Relationship Name="Column">
+							<Entry>
+								<References Name="[dbo].[Descriptionn].[ID]" />
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+			</Relationship>
+			<Relationship Name="DefiningTable">
+				<Entry>
+					<References Name="[dbo].[Descriptionn]" />
+				</Entry>
+			</Relationship>
+			<AttachedAnnotation Disambiguator="6" />
+		</Element>
+		<Element Type="SqlPrimaryKeyConstraint" Name="[dbo].[PrKeyHotelInfo]">
+			<Relationship Name="ColumnSpecifications">
+				<Entry>
+					<Element Type="SqlIndexedColumnSpecification">
+						<Relationship Name="Column">
+							<Entry>
+								<References Name="[dbo].[HotelsRoomsInfo].[ID]" />
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+			</Relationship>
+			<Relationship Name="DefiningTable">
+				<Entry>
+					<References Name="[dbo].[HotelsRoomsInfo]" />
+				</Entry>
+			</Relationship>
+			<AttachedAnnotation Disambiguator="11" />
+		</Element>
+		<Element Type="SqlForeignKeyConstraint" Name="[dbo].[Ref_DESCRIPTION_HOTEL]">
+			<Property Name="OnDeleteAction" Value="1" />
+			<Relationship Name="Columns">
+				<Entry>
+					<References Name="[dbo].[Descriptionn].[Hotelid]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="DefiningTable">
+				<Entry>
+					<References Name="[dbo].[Descriptionn]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="ForeignColumns">
+				<Entry>
+					<References Name="[dbo].[Hotels].[ID]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="ForeignTable">
+				<Entry>
+					<References Name="[dbo].[Hotels]" />
+				</Entry>
+			</Relationship>
+			<AttachedAnnotation Disambiguator="7" />
+		</Element>
+		<Element Type="SqlForeignKeyConstraint" Name="[dbo].[reference_to_personInfo_info]">
+			<Relationship Name="Columns">
+				<Entry>
+					<References Name="[dbo].[booked].[Passportid]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="DefiningTable">
+				<Entry>
+					<References Name="[dbo].[booked]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="ForeignColumns">
+				<Entry>
+					<References Name="[dbo].[PersonsInfo].[Passportid]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="ForeignTable">
+				<Entry>
+					<References Name="[dbo].[PersonsInfo]" />
+				</Entry>
+			</Relationship>
+			<AttachedAnnotation Disambiguator="5" />
+		</Element>
+		<Element Type="SqlProcedure" Name="[dbo].[ReservedRoom]">
+			<Property Name="BodyScript">
+				<Value><![CDATA[
+	select h1.[Name] as HotelName,h1.City as City,h2.BedQuantity as BedQuantity,[Money], b.Passportid as Passportid
+	from Hotels as h1
+	join HotelsRoomsInfo as h2
+	on h1.ID = h2.HotelId
+	join booked as b
+	on b.HotelidRoom = h2.ID
+	join PersonsInfo as p
+	on p.Passportid = b.Passportid]]></Value>
+			</Property>
+			<Property Name="IsAnsiNullsOn" Value="True" />
+			<Relationship Name="BodyDependencies">
+				<Entry>
+					<References Name="[dbo].[Hotels]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[HotelsRoomsInfo]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Hotels].[ID]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[HotelsRoomsInfo].[HotelId]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[booked]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[booked].[HotelidRoom]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[HotelsRoomsInfo].[ID]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[PersonsInfo]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[PersonsInfo].[Passportid]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[booked].[Passportid]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Hotels].[Name]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Hotels].[City]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[HotelsRoomsInfo].[BedQuantity]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[HotelsRoomsInfo].[Money]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[booked].[Passportid]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="Schema">
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[dbo]" />
+				</Entry>
+			</Relationship>
+			<Annotation Type="SysCommentsObjectAnnotation">
+				<Property Name="Length" Value="333" />
+				<Property Name="StartLine" Value="1" />
+				<Property Name="StartColumn" Value="1" />
+				<Property Name="HeaderContents" Value="CREATE PROCEDURE [dbo].[ReservedRoom]&#xD;&#xA;&#xD;&#xA;AS" />
+			</Annotation>
+		</Element>
+		<Element Type="SqlProcedure" Name="[dbo].[SearchResultForWeb]">
+			<Property Name="BodyScript">
+				<Value><![CDATA[
+
+	SET @BedQuantity = nullif(@BedQuantity ,0)
+
+	IF LEN(@CityName) = 0
+	BEGIN
+	SET @CityName = null
+	END
+
+	IF LEN(@HotelName)= 0
+	BEGIN
+	SET @HotelName = null
+	END
+	
+
+
+	SELECT *
+	FROM   (
+			SELECT  res1.ID as HOTELID, res1.[Name], res1.City, res2.[Source], res3.Short, res3.Long,
+							ROW_NUMBER() OVER(PARTITION BY res1.ID ORDER BY res1.ID) as toPrint
+			FROM Hotels as res1
+			JOIN Pictures as res2
+			ON res1.ID = res2.Hotelid
+			JOIN Descriptionn as res3
+			ON res1.ID = res3.Hotelid
+			WHERE res1.ID IN
+				(	
+					select DISTINCT t1.ID
+					from Hotels as t1
+					join HotelsRoomsInfo as t2
+					ON t1.ID = t2.HotelId
+					where t2.ID IN (
+										select h3.ID
+										from Hotels as h4
+										join HotelsRoomsInfo as h3
+										on h4.ID = h3.HotelId
+										where h4.[Name] = isnull(@HotelName,h4.[Name]) and h4.City = isnull(@CityName,h4.City)
+															and h3.BedQuantity = isnull(@BedQuantity,h3.BedQuantity)
+										EXCEPT
+										(
+										select h2.ID as reservedRoomsIds
+										from Hotels as h1
+										join HotelsRoomsInfo as h2
+										on h1.ID = h2.HotelId
+										join booked as b
+										on b.HotelidRoom = h2.ID
+										where (@To IS NOT NULL AND h1.[Name] = isnull(@HotelName,h1.[Name]) and h1.City = isnull(@CityName,h1.City) and
+												h2.BedQuantity = isnull(@BedQuantity,h2.BedQuantity) and 
+												(
+															(@From <= b.[From] and  @To > b.[From])
+															OR (@From >= b.[From] and @From < b.[To])
+												)
+											)
+											OR
+											( @To IS NULL AND
+											h1.[Name] = isnull(@HotelName,h1.[Name]) and h1.City = isnull(@CityName,h1.City) and
+															h2.BedQuantity = isnull(@BedQuantity,h2.BedQuantity) and 
+															(
+																		(@From <= b.[From])
+																		OR (@From >= b.[From] and @From < b.[To])
+															)
+												)
+							
+										group by h2.ID
+										)
+									)
+				)
+
+			)as kkk
+	where kkk.toPrint = 1]]></Value>
+			</Property>
+			<Property Name="IsAnsiNullsOn" Value="True" />
+			<Relationship Name="BodyDependencies">
+				<Entry>
+					<References Name="[dbo].[SearchResultForWeb].[@BedQuantity]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[SearchResultForWeb].[@CityName]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[SearchResultForWeb].[@HotelName]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Hotels]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Pictures]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Hotels].[ID]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Pictures].[Hotelid]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Descriptionn]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Hotels].[ID]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Descriptionn].[Hotelid]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Hotels].[ID]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Hotels].[Name]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Hotels].[City]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Pictures].[Source]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Descriptionn].[Short]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Descriptionn].[Long]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Hotels]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[HotelsRoomsInfo]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Hotels].[ID]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[HotelsRoomsInfo].[HotelId]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[HotelsRoomsInfo].[ID]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Hotels]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[HotelsRoomsInfo]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Hotels].[ID]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[HotelsRoomsInfo].[HotelId]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[HotelsRoomsInfo].[ID]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Hotels].[Name]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Hotels].[City]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[HotelsRoomsInfo].[BedQuantity]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Hotels].[ID]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[HotelsRoomsInfo].[HotelId]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[booked]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[booked].[HotelidRoom]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[HotelsRoomsInfo].[ID]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[HotelsRoomsInfo].[ID]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[SearchResultForWeb].[@To]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Hotels].[Name]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Hotels].[City]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[HotelsRoomsInfo].[BedQuantity]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[SearchResultForWeb].[@From]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[booked].[From]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[booked].[To]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="Parameters">
+				<Entry>
+					<Element Type="SqlSubroutineParameter" Name="[dbo].[SearchResultForWeb].[@HotelName]">
+						<Relationship Name="Type">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Property Name="Length" Value="50" />
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[varchar]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSubroutineParameter" Name="[dbo].[SearchResultForWeb].[@CityName]">
+						<Relationship Name="Type">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Property Name="Length" Value="50" />
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[varchar]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSubroutineParameter" Name="[dbo].[SearchResultForWeb].[@From]">
+						<Relationship Name="Type">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[datetime]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSubroutineParameter" Name="[dbo].[SearchResultForWeb].[@To]">
+						<Property Name="DefaultExpressionScript">
+							<Value><![CDATA[null]]></Value>
+						</Property>
+						<Relationship Name="Type">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[datetime]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSubroutineParameter" Name="[dbo].[SearchResultForWeb].[@BedQuantity]">
+						<Relationship Name="Type">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[tinyint]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+			</Relationship>
+			<Relationship Name="Schema">
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[dbo]" />
+				</Entry>
+			</Relationship>
+			<Annotation Type="SysCommentsObjectAnnotation">
+				<Property Name="Length" Value="2198" />
+				<Property Name="StartLine" Value="1" />
+				<Property Name="StartColumn" Value="1" />
+				<Property Name="HeaderContents" Value="CREATE PROCEDURE [dbo].[SearchResultForWeb]&#xD;&#xA;&#x9;@HotelName varchar(50),&#xD;&#xA;&#x9;@CityName varchar(50),&#xD;&#xA;&#x9;@From datetime,&#xD;&#xA;&#x9;@To datetime = null,&#xD;&#xA;&#x9;@BedQuantity tinyint&#xD;&#xA;AS" />
+			</Annotation>
+		</Element>
+		<Element Type="SqlProcedure" Name="[dbo].[SearchST]">
+			<Property Name="BodyScript">
+				<Value><![CDATA[
+
+	SET @BedQuantity = nullif(@BedQuantity ,0)
+
+	IF LEN(@CityName) = 0
+	BEGIN
+	SET @CityName = null
+	END
+
+	IF LEN(@HotelName)= 0
+	BEGIN
+	SET @HotelName = null
+	END
+	
+	
+
+	select t1.[Name] as HotelName, t1.City as CityName , t2.BedQuantity as Bed, t2.RoomNumber, t2.[Money]
+	from Hotels as t1
+	join HotelsRoomsInfo as t2
+	ON t1.ID = t2.HotelId
+	where t2.ID IN (
+						select h3.ID
+						from Hotels as h4
+						join HotelsRoomsInfo as h3
+						on h4.ID = h3.HotelId
+						where h4.[Name] = isnull(@HotelName,h4.[Name]) and h4.City = isnull(@CityName,h4.City)
+											and h3.BedQuantity = isnull(@BedQuantity,h3.BedQuantity)
+						EXCEPT
+						(
+						select h2.ID as reservedRoomsIds
+						from Hotels as h1
+						join HotelsRoomsInfo as h2
+						on h1.ID = h2.HotelId
+						join booked as b
+						on b.HotelidRoom = h2.ID
+						where (@To IS NOT NULL AND h1.[Name] = isnull(@HotelName,h1.[Name]) and h1.City = isnull(@CityName,h1.City) and
+								h2.BedQuantity = isnull(@BedQuantity,h2.BedQuantity) and 
+								(
+											(@From <= b.[From] and  @To > b.[From])
+											OR (@From >= b.[From] and @From < b.[To])
+								)
+							)
+							OR
+							( @To IS NULL AND
+							h1.[Name] = isnull(@HotelName,h1.[Name]) and h1.City = isnull(@CityName,h1.City) and
+											h2.BedQuantity = isnull(@BedQuantity,h2.BedQuantity) and 
+											(
+														(@From <= b.[From])
+														OR (@From >= b.[From] and @From < b.[To])
+											)
+								)
+						group by h2.ID
+						)
+					)
+		--group by t1.[Name], t1.City, t2.BedQuantity, t2.[Money]									]]></Value>
+			</Property>
+			<Property Name="IsAnsiNullsOn" Value="True" />
+			<Relationship Name="BodyDependencies">
+				<Entry>
+					<References Name="[dbo].[SearchST].[@BedQuantity]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[SearchST].[@CityName]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[SearchST].[@HotelName]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Hotels]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[HotelsRoomsInfo]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Hotels].[ID]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[HotelsRoomsInfo].[HotelId]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Hotels].[Name]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Hotels].[City]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[HotelsRoomsInfo].[BedQuantity]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[HotelsRoomsInfo].[RoomNumber]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[HotelsRoomsInfo].[Money]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[HotelsRoomsInfo].[ID]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Hotels]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[HotelsRoomsInfo]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Hotels].[ID]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[HotelsRoomsInfo].[HotelId]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[HotelsRoomsInfo].[ID]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Hotels].[Name]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Hotels].[City]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[HotelsRoomsInfo].[BedQuantity]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Hotels].[ID]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[HotelsRoomsInfo].[HotelId]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[booked]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[booked].[HotelidRoom]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[HotelsRoomsInfo].[ID]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[HotelsRoomsInfo].[ID]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[SearchST].[@To]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Hotels].[Name]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[Hotels].[City]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[HotelsRoomsInfo].[BedQuantity]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[SearchST].[@From]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[booked].[From]" />
+				</Entry>
+				<Entry>
+					<References Name="[dbo].[booked].[To]" />
+				</Entry>
+			</Relationship>
+			<Relationship Name="Parameters">
+				<Entry>
+					<Element Type="SqlSubroutineParameter" Name="[dbo].[SearchST].[@HotelName]">
+						<Relationship Name="Type">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Property Name="Length" Value="50" />
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[varchar]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSubroutineParameter" Name="[dbo].[SearchST].[@CityName]">
+						<Relationship Name="Type">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Property Name="Length" Value="50" />
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[varchar]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSubroutineParameter" Name="[dbo].[SearchST].[@From]">
+						<Relationship Name="Type">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[datetime]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSubroutineParameter" Name="[dbo].[SearchST].[@To]">
+						<Property Name="DefaultExpressionScript">
+							<Value><![CDATA[null]]></Value>
+						</Property>
+						<Relationship Name="Type">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[datetime]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+				<Entry>
+					<Element Type="SqlSubroutineParameter" Name="[dbo].[SearchST].[@BedQuantity]">
+						<Relationship Name="Type">
+							<Entry>
+								<Element Type="SqlTypeSpecifier">
+									<Relationship Name="Type">
+										<Entry>
+											<References ExternalSource="BuiltIns" Name="[tinyint]" />
+										</Entry>
+									</Relationship>
+								</Element>
+							</Entry>
+						</Relationship>
+					</Element>
+				</Entry>
+			</Relationship>
+			<Relationship Name="Schema">
+				<Entry>
+					<References ExternalSource="BuiltIns" Name="[dbo]" />
+				</Entry>
+			</Relationship>
+			<Annotation Type="SysCommentsObjectAnnotation">
+				<Property Name="Length" Value="1772" />
+				<Property Name="StartLine" Value="1" />
+				<Property Name="StartColumn" Value="1" />
+				<Property Name="HeaderContents" Value="CREATE PROCEDURE [dbo].[SearchST]&#xD;&#xA;&#x9;@HotelName varchar(50),&#xD;&#xA;&#x9;@CityName varchar(50),&#xD;&#xA;&#x9;@From datetime,&#xD;&#xA;&#x9;@To datetime = null,&#xD;&#xA;&#x9;@BedQuantity tinyint&#xD;&#xA;AS" />
+			</Annotation>
+		</Element>
+	</Model>
+</DataSchemaModel>

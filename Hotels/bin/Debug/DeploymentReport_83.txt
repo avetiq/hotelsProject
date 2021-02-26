@@ -1,0 +1,31 @@
+﻿** Highlights
+     Tables that will be rebuilt
+       None
+     Clustered indexes that will be dropped
+       None
+     Clustered indexes that will be created
+       None
+     Possible data issues
+       None
+
+** User actions
+     Alter
+       [dbo].[PersonsInfo] (Table)
+       [dbo].[DeleteHotel] (Procedure)
+       [dbo].[InsertFromWindow] (Procedure)
+       [dbo].[SearchST] (Procedure)
+     Create
+       [dbo].[Descriptionn] (Table)
+       [dbo].[Pictures] (Table)
+       [dbo].[Ref_DESCRIPTION_HOTEL] (Foreign Key)
+       [dbo].[Hotels_Info_Pictures] (Foreign Key)
+       [dbo].[Book] (Procedure)
+       [dbo].[FreeRoomsCertainHotel] (Procedure)
+       [dbo].[getRoomInfoPicture] (Procedure)
+       [dbo].[InsertDescription] (Procedure)
+       [dbo].[InsertPicture] (Procedure)
+       [dbo].[SearchResultForWeb] (Procedure)
+
+** Supporting actions
+     Refresh
+       [dbo].[ReservedRoom] (Procedure)
